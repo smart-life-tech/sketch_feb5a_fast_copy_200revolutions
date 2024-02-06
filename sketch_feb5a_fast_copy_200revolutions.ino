@@ -139,6 +139,14 @@ void loop()
   {
     // Perform action for double press on forward button
     Serial.println("Double forward button press detected");
+    // Move in one direction
+    for (int distance = 0; distance < NumSteps; distance++)
+    {
+      digitalWrite(stepPin, HIGH);
+      delayMicroseconds(Speed);
+      digitalWrite(stepPin, LOW);
+      delayMicroseconds(Speed);
+    }
     doubleForwardPress = false;
   }
 
@@ -146,6 +154,14 @@ void loop()
   {
     // Perform action for double press on reverse button
     Serial.println("Double reverse button press detected");
+    // Move in one direction
+    for (int distance = 0; distance < NumSteps; distance++)
+    {
+      digitalWrite(stepPin, HIGH);
+      delayMicroseconds(Speed);
+      digitalWrite(stepPin, LOW);
+      delayMicroseconds(Speed);
+    }
     doubleReversePress = false;
   }
 
