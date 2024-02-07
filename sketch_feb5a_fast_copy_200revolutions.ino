@@ -18,9 +18,9 @@ unsigned int forwardPressCount = 0;
 unsigned int reversePressCount = 0;
 
 // Other constants
-const int NumSteps = 800; // Number of steps to move the motor
-const int Speed = 200;    // Speed at which the motor will "step" (shouldn't be less than 200)
-
+const int NumSteps = 24000; // Number of steps to move the motor
+const int Speed = 200;      // Speed at which the motor will "step" (shouldn't be less than 200)
+int maxStep = 0;
 void setup()
 {
   Serial.begin(9600);
@@ -58,12 +58,13 @@ void loop()
         digitalWrite(directionPin, LOW);
 
         // Move in one direction until the button is released
-        while (digitalRead(forwardPin) == LOW)
+        while (digitalRead(forwardPin) == LOW && maxStep <= NumSteps)
         {
           digitalWrite(stepPin, HIGH);
           delayMicroseconds(Speed);
           digitalWrite(stepPin, LOW);
           delayMicroseconds(Speed);
+          maxStep++;
         }
 
         Serial.println("Forward movement done");
@@ -106,12 +107,13 @@ void loop()
         digitalWrite(directionPin, HIGH);
 
         // Move in the reverse direction until the button is released
-        while (digitalRead(reversePin) == LOW)
+        while (digitalRead(reversePin) == LOW && maxStep >= 0)
         {
           digitalWrite(stepPin, HIGH);
           delayMicroseconds(Speed);
           digitalWrite(stepPin, LOW);
           delayMicroseconds(Speed);
+          maxStep--;
         }
 
         Serial.println("Reverse movement done");
